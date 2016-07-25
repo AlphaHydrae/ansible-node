@@ -1,0 +1,14 @@
+# Yum
+- name: Install NodeJS
+  yum: pkg=nodejs state=latest
+  when: ansible_pkg_mgr == 'yum'
+- name: Install NPM
+  yum: pkg=npm state=latest
+  when: ansible_pkg_mgr == 'yum'
+
+# Homebrew
+- name: brew install node
+  homebrew: name=node state=installed
+  become: true
+  become_user: "{{ node_brew_user }}"
+  when: ansible_pkg_mgr == 'homebrew'

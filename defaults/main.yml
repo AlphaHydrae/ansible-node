@@ -1,2 +1,2 @@
 ---
-node_brew_user: "{{ user }}"
+node_homebrew_user: "{{ homebrew_user | default(user) | default(omit) }}"

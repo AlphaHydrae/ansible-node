@@ -1,14 +1,20 @@
-# Yum
-- name: Install NodeJS
-  yum: pkg=nodejs state=latest
-  when: ansible_pkg_mgr == 'yum'
-- name: Install NPM
-  yum: pkg=npm state=latest
-  when: ansible_pkg_mgr == 'yum'
+---
 
 # Homebrew
-- name: brew install node
-  homebrew: name=node state=installed
+- name: Install Node.js & npm (Homebrew)
+  homebrew: name=node state=present
   become: true
-  become_user: "{{ node_brew_user }}"
+  become_user: "{{ node_homebrew_user }}"
   when: ansible_pkg_mgr == 'homebrew'
+
+# Yum
+- name: Install Node.JS & npm (Yum)
+  yum: pkg={{ item }} state=present
+  with_items:
+    - nodejs
+    - npm
+  when: ansible_pkg_mgr == 'yum'
+
+# Unsupported package managers
+- fail: msg="{{ ansible_pkg_mgr }} is not a supported package manager (Homebrew or Yum are supported)"
+  when: ansible_pkg_mgr != 'yum' and ansible_pkg_mgr != 'homebrew'

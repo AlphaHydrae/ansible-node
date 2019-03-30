@@ -9,10 +9,11 @@
 
 # Yum
 - name: Install Node.JS & npm (Yum)
-  yum: pkg={{ item }} state=present
-  with_items:
-    - nodejs
-    - npm
+  yum:
+    name:
+      - nodejs
+      - npm
+    state: present
   when: ansible_pkg_mgr == 'yum'
 
 # Unsupported package managers

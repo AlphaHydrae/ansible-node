@@ -2,7 +2,9 @@
 
 # Homebrew
 - name: Install Node.js & npm (Homebrew)
-  homebrew: name=node@10 state=present
+  homebrew:
+    name: "node@{{ node_package_version }}"
+    state: present
   become: true
   become_user: "{{ node_homebrew_user }}"
   when: ansible_pkg_mgr == 'homebrew'

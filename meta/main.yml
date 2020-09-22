@@ -1,6 +1,6 @@
 galaxy_info:
   author: Simon Oulevay (Alpha Hydrae)
-  description: Installs Node.js.
+  description: Installs Node.js with asdf.
   license: MIT
   min_ansible_version: 2.0
 
@@ -16,4 +16,12 @@ galaxy_info:
     - node
     - nodejs
 
-dependencies: []
+dependencies:
+  # Do not automatically install nodejs global version because the Node.js
+  # release keyring must be imported first. Installation is handled by this
+  # role's tasks.
+  - role: AlphaHydrae.asdf-plugin
+    asdf_plugin_name: nodejs
+    asdf_plugin_global_version: "{{ node_version }}"
+    asdf_plugin_preinstall_cmd: "{{ asdf_plugin_dir }}/bin/import-release-team-keyring"
+  - role: AlphaHydrae.gnupg

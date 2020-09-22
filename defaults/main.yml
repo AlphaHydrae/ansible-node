@@ -1,3 +1,4 @@
 ---
-node_homebrew_user: "{{ homebrew_user | default(user) | default(omit) }}"
-node_package_version: 14
+node_homebrew_dir: "{{ homebrew_dir | default('/usr/local') }}"
+node_global_packages: []
+node_version: 14

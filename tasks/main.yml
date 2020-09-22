@@ -1,23 +1,13 @@
 ---
 
-# Homebrew
-- name: Install Node.js & npm (Homebrew)
-  homebrew:
-    name: "node@{{ node_package_version }}"
-    state: present
+- name: Install Node.js global package {{ item.name if 'name' in item else item }}
   become: true
-  become_user: "{{ node_homebrew_user }}"
-  when: ansible_pkg_mgr == 'homebrew'
-
-# Yum
-- name: Install Node.JS & npm (Yum)
-  yum:
-    name:
-      - nodejs
-      - npm
-    state: present
-  when: ansible_pkg_mgr == 'yum'
-
-# Unsupported package managers
-- fail: msg="{{ ansible_pkg_mgr }} is not a supported package manager (Homebrew or Yum are supported)"
-  when: ansible_pkg_mgr != 'yum' and ansible_pkg_mgr != 'homebrew'
+  become_user: "{{ asdf_user }}"
+  npm:
+    name: "{{ item.name if 'name' in item else item }}"
+    global: true
+    version: "{{ item.version if 'version' in item else omit }}"
+  environment:
+    ASDF_NODEJS_VERSION: "{{ node_version }}"
+    PATH: "{{ asdf_shims_dir }}:{{ node_homebrew_dir }}/bin:{{ ansible_env.PATH }}"
+  with_items: "{{ node_global_packages }}"

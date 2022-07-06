@@ -23,5 +23,5 @@ dependencies:
   - role: AlphaHydrae.asdf-plugin
     asdf_plugin_name: nodejs
     asdf_plugin_global_version: "{{ node_version }}"
-    asdf_plugin_preinstall_cmd: "{{ asdf_plugin_dir }}/bin/import-release-team-keyring"
+    # asdf_plugin_preinstall_cmd: "{{ asdf_plugin_dir }}/bin/import-release-team-keyring"
   - role: AlphaHydrae.gnupg

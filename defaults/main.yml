@@ -1,4 +1,4 @@
 ---
 node_homebrew_dir: "{{ homebrew_dir | default('/usr/local') }}"
 node_global_packages: []
-node_version: 18.4.0
+node_version: 22.9.0

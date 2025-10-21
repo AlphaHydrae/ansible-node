@@ -1,6 +1,6 @@
 ---
 
-- name: Install Node.js global package {{ item.name if 'name' in item else item }}
+- name: Install Node.js global package
   become: true
   become_user: "{{ asdf_user }}"
   npm:
